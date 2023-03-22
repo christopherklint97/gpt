@@ -1,15 +1,16 @@
 import { spawn } from "child_process";
 import { readFile } from "fs/promises";
 import { openai } from "./openai";
+import wrap from "word-wrap";
 
 async function main() {
   console.log("Starting openai app...\n");
 
-  const vim = spawn("vim", ["input.txt"], { stdio: "inherit" });
+  const vim = spawn("vim", ["./src/data/input.txt"], { stdio: "inherit" });
   vim.on("exit", async () => {
     console.log("Closed Vim");
 
-    const question = await readFile("input.txt", "utf-8");
+    const question = await readFile("./src/data/input.txt", "utf-8");
 
     console.log("\nCreating chat completion...\n");
 
@@ -26,7 +27,9 @@ async function main() {
       console.dir("ChatCompletion response:");
       console.dir(res.data, { depth: null, colors: true });
 
-      console.log(res.data.choices[0].message?.content);
+      console.log(
+        wrap(res.data.choices[0].message?.content || "", { width: 120 })
+      );
     } catch (err) {
       console.error("Error:", err);
     }

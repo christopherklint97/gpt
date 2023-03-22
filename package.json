@@ -22,7 +22,8 @@
   "dependencies": {
     "dotenv": "16.0.3",
     "node": "19.8.1",
-    "openai": "3.2.1"
+    "openai": "3.2.1",
+    "word-wrap": "1.2.3"
   },
   "scripts": {
     "chat": "npx tsx src/chat.ts",
